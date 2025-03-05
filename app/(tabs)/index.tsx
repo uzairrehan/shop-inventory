@@ -1,14 +1,14 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import Card from "@/components/card";
-import products from "@/constants/dummyData";
 import { FlatList } from "react-native-gesture-handler";
+import { useData } from "@/context/dataProvider";
 
 export default function HomeScreen() {
+  const { data } = useData();
   return (
     <View style={styles.container}>
-      <View style={{height:20}}>
-      </View>
+      <View style={{ height: 20 }}></View>
       <View style={styles.title}>
         <ThemedText type="title">All Items</ThemedText>
       </View>
@@ -21,7 +21,7 @@ export default function HomeScreen() {
           scrollEnabled
           style={styles.cards}
           ItemSeparatorComponent={() => <View style={styles.dummy}></View>}
-          data={products}
+          data={data}
           renderItem={({ item }) => (
             <Card
               name={item.name}
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     padding: "4%",
-    flex:1
+    flex: 1,
   },
   title: {
     flexDirection: "column",

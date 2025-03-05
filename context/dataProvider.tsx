@@ -3,9 +3,16 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 // Create the context
 const DataContext = createContext(null);
 
+export interface DataType {
+  id:number,
+  name:string,
+  stock:number,
+  unit:string
+}
+
 // Create a provider component
 export const DataProvider = ({ children }:{children:ReactNode}) => {
-  const [data, setData] = useState([
+  const [data, setData] = useState<DataType[]>([
     { id: 1, name: "Corn", stock: 7, unit: "kg" },
     { id: 2, name: "Rice", stock: 15, unit: "kg" },
     { id: 3, name: "Wheat", stock: 10, unit: "kg" },

@@ -1,10 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import Card from "@/components/card";
-import products from "@/constants/dummyData";
 import { FlatList } from "react-native-gesture-handler";
+import { DataType, useData } from "@/context/dataProvider";
 
 export default function TabTwoScreen() {
+  const { data } =  useData()
   return (
     <View style={styles.container}>
       <View style={{height:20}}>
@@ -21,7 +22,7 @@ export default function TabTwoScreen() {
           scrollEnabled
           style={styles.cards}
           ItemSeparatorComponent={() => <View style={styles.dummy}></View>}
-          data={products.filter(item=> item.stock < 10)}
+          data={data.filter(data=> data.stock < 10)}
           renderItem={({item}) => (<Card
               name={item.name}
               quantity={item.stock}
