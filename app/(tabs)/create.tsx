@@ -1,24 +1,61 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
+import Card from "@/components/card";
+import products from "@/constants/dummyData";
+import { FlatList } from "react-native-gesture-handler";
 
 export default function TabThreeScreen() {
   return (
-    <View style={styles.titleContainer}>
-          <View style={{height:20}}>
-          </View>
+    <View style={styles.container}>
+      <View style={{height:20}}>
+      </View>
+      <View style={styles.title}>
+        <ThemedText type="title">Low Stock</ThemedText>
+      </View>
+      <View style={styles.heading}>
+        <ThemedText type="defaultSemiBold">Items</ThemedText>
+        <ThemedText type="defaultSemiBold">Quantity</ThemedText>
+      </View>
       <View>
-        <ThemedText type="title">Create</ThemedText>
+        <FlatList
+          scrollEnabled
+          style={styles.cards}
+          ItemSeparatorComponent={() => <View style={styles.dummy}></View>}
+          data={products.filter(item=> item.stock < 10)}
+          renderItem={({item}) => (<Card
+              name={item.name}
+              quantity={item.stock}
+              unit={item.unit}
+              color={item.stock >9 ? "#d7f6bf" : "#ffcccc"}
+            />
+  )}
+          keyExtractor={(item) => item.id.toString()}
+        />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    backgroundColor: "#fff",
     padding: "4%",
-    flexDirection: "row",
-    gap: 8,
-    flex: 1,
+    flex:1
+  },
+  title: {
+    flexDirection: "column",
     backgroundColor: "#fff",
   },
+  heading: {
+    paddingVertical: "4%",
+    color: "#3B3E4F",
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    backgroundColor: "#fff",
+  },
+  dummy: {
+    height: 10,
+  },
+  cards: {},
 });
