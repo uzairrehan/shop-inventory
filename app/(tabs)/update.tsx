@@ -4,16 +4,17 @@ import Card from "@/components/card";
 import { FlatList } from "react-native-gesture-handler";
 import { useState } from "react";
 import { useData } from "@/context/dataProvider";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function TabThreeScreen() {
   const [name, setName] = useState("");
   const [stock, setStock] = useState("");
   const [unit, setUnit] = useState("");
-  const {data ,setData} = useData()
+  const { data, setData } = useData();
 
   function handleAdd() {
     if (!name || !stock || !unit) {
-      return
+      return;
     }
     const newProduct = {
       name: name,
@@ -21,11 +22,19 @@ export default function TabThreeScreen() {
       unit: unit,
       id: Date.now(),
     };
-    setData([newProduct , ...data])
+    setData([newProduct, ...data]);
     setName("");
     setStock("");
     setUnit("");
   }
+
+  function editHandler(id:number) {
+    
+  }
+  function deleteHandler(id:number) {
+    
+  }
+
 
   return (
     <View style={styles.container}>
@@ -73,25 +82,33 @@ export default function TabThreeScreen() {
         <ThemedText type="defaultSemiBold">Quantity</ThemedText>
       </View>
       <View>
-        {
-          data && <FlatList
-          scrollEnabled
-          ItemSeparatorComponent={() => <View style={styles.dummy}></View>}
-          data={data}
-          renderItem={({ item }) => (
-            <Card
-              name={item.name}
-              quantity={item.stock}
-              unit={item.unit}
-              color={item.stock > 9 ? "#d7f6bf" : "#ffcccc"}
-            />
-            
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-
-        }
-       
+        {data && (
+          <FlatList
+            scrollEnabled
+            ItemSeparatorComponent={() => <View style={styles.dummy}></View>}
+            data={data}
+            renderItem={({ item }) => (
+              <View
+                style={[
+                  styles.cardContainer,
+                  { backgroundColor: item.stock > 9 ? "#d7f6bf" : "#ffcccc" },
+                ]}
+              >
+                <View>
+                  <ThemedText type="defaultSemiBold">{item.name}</ThemedText>
+                  <ThemedText type="default">
+                    {item.stock + item.unit}
+                  </ThemedText>
+                </View>
+                <View>
+                  <AntDesign name="edit" size={24} color={"black"} onPress={()=> editHandler(item.id)} />
+                  <AntDesign name="delete" size={24} color={"black"} onPress={()=> deleteHandler(item.id)} />
+                </View>
+              </View>
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        )}
       </View>
     </View>
   );
@@ -136,5 +153,17 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+  },
+  cardContainer: {
+    backgroundColor: "green",
+    color: "white",
+    borderRadius: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignContent: "center",
+    alignItems: "center",
+    height: 60,
+    paddingHorizontal: 10,
   },
 });
