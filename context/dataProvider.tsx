@@ -1,4 +1,11 @@
-const products = [
+import React, { createContext, useState, useContext, ReactNode } from "react";
+
+// Create the context
+const DataContext = createContext(null);
+
+// Create a provider component
+export const DataProvider = ({ children }:{children:ReactNode}) => {
+  const [data, setData] = useState([
     { id: 1, name: "Corn", stock: 7, unit: "kg" },
     { id: 2, name: "Rice", stock: 15, unit: "kg" },
     { id: 3, name: "Wheat", stock: 10, unit: "kg" },
@@ -19,7 +26,14 @@ const products = [
     { id: 18, name: "Banana", stock: 20, unit: "kg" },
     { id: 19, name: "Orange", stock: 24, unit: "kg" },
     { id: 20, name: "Mango", stock: 14, unit: "kg" },
-  ];
-  
-  
-  export default products
+  ]);
+
+  return (
+    <DataContext.Provider value={{ data, setData }}>
+      {children}
+    </DataContext.Provider>
+  );
+};
+
+// Custom hook to use the context
+export const useData = () => useContext(DataContext);
