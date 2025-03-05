@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import Card from "@/components/card";
 import { FlatList } from "react-native-gesture-handler";
 import { useState } from "react";
 import { useData } from "@/context/dataProvider";
@@ -11,6 +10,7 @@ export default function TabThreeScreen() {
   const [stock, setStock] = useState("");
   const [unit, setUnit] = useState("");
   const { data, setData } = useData();
+
 
   function handleAdd() {
     if (!name || !stock || !unit) {
@@ -28,13 +28,18 @@ export default function TabThreeScreen() {
     setUnit("");
   }
 
-  function editHandler(id:number) {
-    
-  }
-  function deleteHandler(id:number) {
-    
+  function editHandler(id: number) {
+    const filtered = data.filter((item) => item.id == id);
+    const [current] = filtered;
+    setName(current.name);
+    setStock(current.stock.toString());
+    setUnit(current.unit);
+    setData(data.filter(item => item.id != id ))
   }
 
+  function deleteHandler(id: number) {
+    setData(data.filter((item) => item.id != id));
+  }
 
   return (
     <View style={styles.container}>
@@ -100,9 +105,16 @@ export default function TabThreeScreen() {
                     {item.stock + item.unit}
                   </ThemedText>
                 </View>
-                <View>
-                  <AntDesign name="edit" size={24} color={"black"} onPress={()=> editHandler(item.id)} />
-                  <AntDesign name="delete" size={24} color={"black"} onPress={()=> deleteHandler(item.id)} />
+                <View
+                  style={{ display: "flex", flexDirection: "row", gap: 10 }}
+                >
+                  <Pressable onPress={() => editHandler(item.id)}>
+                    <AntDesign name="edit" size={20} color={"black"} />
+                  </Pressable>
+
+                  <Pressable onPress={() => deleteHandler(item.id)}>
+                    <AntDesign name="delete" size={20} color={"black"} />
+                  </Pressable>
                 </View>
               </View>
             )}
