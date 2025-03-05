@@ -1,11 +1,13 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 
-export default function TabTwoScreen() {
+export default function TabThreeScreen() {
   return (
     <View style={styles.titleContainer}>
+          <View style={{height:20}}>
+          </View>
       <View>
-        <ThemedText type="title">Dashboard</ThemedText>
+        <ThemedText type="title">Create</ThemedText>
       </View>
     </View>
   );
