@@ -2,9 +2,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -35,17 +33,17 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="lowStock"
+        name="lowstock"
         options={{
           title: 'Low Stock',
-          tabBarIcon: ({ color }) => <AntDesign name="arrowup" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="arrowdown" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="create"
         options={{
           title: 'Create',
-          tabBarIcon: ({ color }) => <AntDesign name="pluscircle" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="pluscircleo" size={24} color={color} />,
         }}
       />
     </Tabs>
