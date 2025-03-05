@@ -1,7 +1,6 @@
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import Card from "@/components/card";
-import products from "@/constants/dummyData";
 import { FlatList } from "react-native-gesture-handler";
 import { useState } from "react";
 import { useData } from "@/context/dataProvider";
@@ -13,13 +12,16 @@ export default function TabThreeScreen() {
   const {data ,setData} = useData()
 
   function handleAdd() {
+    if (!name || !stock || !unit) {
+      return
+    }
     const newProduct = {
       name: name,
       stock: Number(stock),
       unit: unit,
-      id: data.length + 1,
+      id: Date.now(),
     };
-    setData([...data,newProduct])
+    setData([newProduct , ...data])
     setName("");
     setStock("");
     setUnit("");
@@ -71,7 +73,8 @@ export default function TabThreeScreen() {
         <ThemedText type="defaultSemiBold">Quantity</ThemedText>
       </View>
       <View>
-        <FlatList
+        {
+          data && <FlatList
           scrollEnabled
           ItemSeparatorComponent={() => <View style={styles.dummy}></View>}
           data={data}
@@ -82,9 +85,13 @@ export default function TabThreeScreen() {
               unit={item.unit}
               color={item.stock > 9 ? "#d7f6bf" : "#ffcccc"}
             />
+            
           )}
           keyExtractor={(item) => item.id.toString()}
         />
+
+        }
+       
       </View>
     </View>
   );

@@ -1,17 +1,20 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
-// Create the context
-const DataContext = createContext(null);
-
 export interface DataType {
-  id:number,
-  name:string,
-  stock:number,
-  unit:string
+  id: number;
+  name: string;
+  stock: number;
+  unit: string;
 }
 
-// Create a provider component
-export const DataProvider = ({ children }:{children:ReactNode}) => {
+interface DataContextType {
+  data: DataType[];
+  setData: React.Dispatch<React.SetStateAction<DataType[]>>;
+}
+
+const DataContext = createContext<DataContextType | undefined>(undefined);
+
+export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<DataType[]>([
     { id: 1, name: "Corn", stock: 7, unit: "kg" },
     { id: 2, name: "Rice", stock: 15, unit: "kg" },
@@ -42,5 +45,10 @@ export const DataProvider = ({ children }:{children:ReactNode}) => {
   );
 };
 
-// Custom hook to use the context
-export const useData = () => useContext(DataContext);
+export const useData = () => {
+  const context = useContext(DataContext);
+  if (!context) {
+    throw new Error("useData must be used within a DataProvider");
+  }
+  return context;
+};

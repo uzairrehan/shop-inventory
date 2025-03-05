@@ -2,14 +2,13 @@ import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import Card from "@/components/card";
 import { FlatList } from "react-native-gesture-handler";
-import { DataType, useData } from "@/context/dataProvider";
+import { useData } from "@/context/dataProvider";
 
 export default function TabTwoScreen() {
-  const { data } =  useData()
+  const { data } = useData();
   return (
     <View style={styles.container}>
-      <View style={{height:20}}>
-      </View>
+      <View style={{ height: 20 }}></View>
       <View style={styles.title}>
         <ThemedText type="title">Low Stock</ThemedText>
       </View>
@@ -22,14 +21,15 @@ export default function TabTwoScreen() {
           scrollEnabled
           style={styles.cards}
           ItemSeparatorComponent={() => <View style={styles.dummy}></View>}
-          data={data.filter(data=> data.stock < 10)}
-          renderItem={({item}) => (<Card
+          data={data.filter((data) => data.stock < 10)}
+          renderItem={({ item }) => (
+            <Card
               name={item.name}
               quantity={item.stock}
               unit={item.unit}
-              color={item.stock >9 ? "#d7f6bf" : "#ffcccc"}
+              color={item.stock > 9 ? "#d7f6bf" : "#ffcccc"}
             />
-  )}
+          )}
           keyExtractor={(item) => item.id.toString()}
         />
       </View>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     padding: "4%",
-    flex:1
+    flex: 1,
   },
   title: {
     flexDirection: "column",
