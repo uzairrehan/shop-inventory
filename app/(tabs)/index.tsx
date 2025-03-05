@@ -1,5 +1,4 @@
 import { StyleSheet, View } from "react-native";
-
 import { ThemedText } from "@/components/ThemedText";
 
 export default function HomeScreen() {
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
     padding: "4%",
     flexDirection: "row",
     gap: 8,
-    flex:1,
-    backgroundColor:"#fff"
+    flex: 1,
+    backgroundColor: "#fff",
   },
 });
